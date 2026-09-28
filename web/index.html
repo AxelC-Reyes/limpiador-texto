@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Limpiador de noticias</title>
+  <script>
+    // Aplica el tema guardado antes de pintar, para que no parpadee.
+    try { const t = localStorage.getItem("limpiador-tema"); if (t) document.documentElement.dataset.tema = t; } catch {}
+  </script>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <div class="fondo" aria-hidden="true"></div>
+
+  <!-- Íconos (trazo fino, esquinas redondas) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
+      <symbol id="i-duda" viewBox="0 0 24 24"><path d="M9.2 9.2a2.9 2.9 0 1 1 4.1 2.6c-.8.4-1.3 1.1-1.3 2v.6"/><circle cx="12" cy="17.6" r=".6" fill="currentColor"/></symbol>
+      <symbol id="i-subir" viewBox="0 0 24 24"><path d="M12 19V5M5.5 11.5L12 5l6.5 6.5"/></symbol>
+      <symbol id="i-bajar" viewBox="0 0 24 24"><path d="M12 5v14M5.5 12.5L12 19l6.5-6.5"/></symbol>
+      <symbol id="i-ajustes" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+      <symbol id="i-repetir" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4.5v3.8h-3.8"/></symbol>
+      <symbol id="i-izq" viewBox="0 0 24 24"><path d="M14.5 6l-6 6 6 6"/></symbol>
+      <symbol id="i-der" viewBox="0 0 24 24"><path d="M9.5 6l6 6-6 6"/></symbol>
+      <symbol id="i-abajo" viewBox="0 0 24 24"><path d="M6 9.5l6 6 6-6"/></symbol>
+      <symbol id="i-buscar" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M15.5 15.5L20 20"/></symbol>
+      <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3.5h6.5L18 8v11a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 19V5a1.5 1.5 0 0 1 1-1.5zM13.5 3.5V8H18M9 12.5h6M9 16h4"/></symbol>
+      <symbol id="i-tabla" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 10h16M4 14.5h16M10 10v9"/></symbol>
+      <symbol id="i-cerebro" viewBox="0 0 24 24"><path d="M12 5.5v13M12 5.5a3 3 0 0 0-5.6 1.4A3 3 0 0 0 5 12a3 3 0 0 0 1.6 4.6A3 3 0 0 0 12 18.5M12 5.5a3 3 0 0 1 5.6 1.4A3 3 0 0 1 19 12a3 3 0 0 1-1.6 4.6 3 3 0 0 1-5.4 1.9"/></symbol>
+      <symbol id="i-deshacer" viewBox="0 0 24 24"><path d="M8.5 5L4.5 9l4 4M4.5 9h9.5a5.5 5.5 0 0 1 0 11H10"/></symbol>
+      <symbol id="i-teclado" viewBox="0 0 24 24"><rect x="3" y="6.5" width="18" height="11" rx="2"/><path d="M7 10.5h.01M10.5 10.5h.01M14 10.5h.01M17 10.5h.01M8 14h8"/></symbol>
+      <symbol id="i-enlace" viewBox="0 0 24 24"><path d="M14 5h5v5M19 5l-8 8M17 14v4.5a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 4 18.5v-10A1.5 1.5 0 0 1 5.5 7H10"/></symbol>
+      <symbol id="i-filtro" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></symbol>
+      <symbol id="i-flecha" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+      <symbol id="i-chispa" viewBox="0 0 24 24"><path d="M12 3l1.8 5.4a2 2 0 0 0 1.3 1.3L20.5 11.5l-5.4 1.8a2 2 0 0 0-1.3 1.3L12 20l-1.8-5.4a2 2 0 0 0-1.3-1.3L3.5 11.5l5.4-1.8a2 2 0 0 0 1.3-1.3z"/></symbol>
+      <symbol id="i-sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></symbol>
+      <symbol id="i-luna" viewBox="0 0 24 24"><path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="barra">
+    <a class="marca" href="#" aria-label="Inicio">
+      <span class="logo" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="marca-texto">limpiador</span>
+    </a>
+
+    <nav class="pestanas" role="tablist" aria-label="Vistas" hidden>
+      <button role="tab" data-vista="revisar" aria-selected="true">Revisar <span class="insignia" id="insignia-dudosas"></span></button>
+      <button role="tab" data-vista="tabla">Tabla</button>
+      <button role="tab" data-vista="panorama">Panorama</button>
+      <button role="tab" data-vista="archivos">Archivos</button>
+      <button role="tab" data-vista="modelo">Modelo</button>
+      <button role="tab" data-vista="exportar">Exportar</button>
+    </nav>
+
+    <div class="acciones">
+      <div class="tema" role="group" aria-label="Tema">
+        <button type="button" data-tema="claro" title="Claro"><svg><use href="#i-sol"/></svg><span>Claro</span></button>
+        <button type="button" data-tema="oscuro" title="Oscuro"><svg><use href="#i-luna"/></svg><span>Oscuro</span></button>
+      </div>
+      <button id="btn-limpiar" class="boton-icono" type="button" disabled title="Volver a limpiar con los ajustes actuales" aria-label="Volver a limpiar">
+        <svg><use href="#i-repetir"/></svg></button>
+      <button id="btn-ajustes" class="boton-icono" type="button" aria-expanded="false" title="Ajustes" aria-label="Ajustes">
+        <svg><use href="#i-ajustes"/></svg></button>
+      <label class="boton primario" for="entrada-archivos"><svg><use href="#i-subir"/></svg><span>Subir</span></label>
+      <input id="entrada-archivos" type="file" accept=".json,.jsonl,application/json" multiple hidden>
+    </div>
+  </header>
+
+  <main>
+    <!-- Inicio: sin datos todavía -->
+    <section id="vacio" class="inicio">
+      <p class="anuncio"><svg><use href="#i-chispa"/></svg>Todo corre en esta computadora. Sin internet, sin servicios externos.</p>
+      <h1>Noticias limpias</h1>
+      <div class="entrada" id="zona-soltar">
+        <p class="entrada-texto">Suelta aquí tus archivos <b>.json</b> o <b>.jsonl</b></p>
+        <div class="entrada-pie">
+          <span class="chip-formato">Listas</span><span class="chip-formato">JSON Lines</span><span class="chip-formato">{"articles": […]}</span>
+          <label class="boton-redondo" for="entrada-archivos" title="Elegir archivos" aria-label="Elegir archivos"><svg><use href="#i-subir"/></svg></label>
+        </div>
+      </div>
+      <div class="inicio-botones">
+        <button id="btn-prueba" class="boton contorno grande" type="button"><svg><use href="#i-doc"/></svg>Probar con ejemplo</button>
+      </div>
+      <details class="seccion guia" id="guia-inicio">
+        <summary><h2>Cómo deben venir mis JSON</h2><svg class="chevron"><use href="#i-abajo"/></svg></summary>
+        <div class="contenido" data-guia></div>
+      </details>
+    </section>
+
+    <!-- Trabajo -->
+    <section id="trabajo" hidden>
+      <div class="archivos" id="archivos"></div>
+      <details class="resumen-plegable" data-seccion="resumen" open>
+        <summary><span class="compacto" id="resumen-compacto"></span><span class="resumen-etq">Resumen</span><svg class="chevron"><use href="#i-abajo"/></svg></summary>
+        <div class="cifras" id="cifras"></div>
+        <div class="composicion" id="composicion"></div>
+      </details>
+
+      <div class="con-filtros">
+        <aside class="filtros" id="filtros" aria-label="Filtros">
+          <div class="buscador">
+            <svg><use href="#i-buscar"/></svg>
+            <input id="f-buscar" type="search" placeholder="Buscar" title="Busca en título o fuente. Atajo: /" autocomplete="off">
+            <kbd>/</kbd>
+          </div>
+          <fieldset class="chips-decision">
+            <legend>Mostrar</legend>
+            <label class="chip-filtro" data-d="dudoso"><input type="checkbox" name="f-decision" value="dudoso" checked>
+              <span class="punto"></span>Dudosas<span class="cuenta" data-c="dudoso"></span></label>
+            <label class="chip-filtro" data-d="conservar"><input type="checkbox" name="f-decision" value="conservar">
+              <span class="punto"></span>Conservar<span class="cuenta" data-c="conservar"></span></label>
+            <label class="chip-filtro" data-d="descartar"><input type="checkbox" name="f-decision" value="descartar">
+              <span class="punto"></span>Descartar<span class="cuenta" data-c="descartar"></span></label>
+          </fieldset>
+          <label class="campo">Quién decidió
+            <select id="f-origen"><option value="">Todos</option></select></label>
+          <label class="campo">Fuente
+            <select id="f-fuente"><option value="">Todas</option></select></label>
+          <label class="campo">Ordenar por
+            <select id="f-orden">
+              <option value="puntaje-desc">Puntaje, alto primero</option>
+              <option value="puntaje-asc">Puntaje, bajo primero</option>
+              <option value="confianza-desc">Confianza del modelo</option>
+              <option value="fecha-desc">Más recientes</option>
+              <option value="palabras-desc">Más largas</option>
+            </select></label>
+          <p class="total" id="f-total"></p>
+          <button class="enlace-suave" type="button" id="btn-atajos"><svg><use href="#i-teclado"/></svg>Atajos de teclado</button>
+        </aside>
+
+        <div class="vistas">
+          <div class="herramientas" id="herramientas">
+            <button class="boton contorno chico" type="button" id="btn-filtros" aria-expanded="true"><svg><use href="#i-filtro"/></svg><span>Filtros</span></button>
+            <span class="herramientas-texto" id="herramientas-texto"></span>
+          </div>
+          <section data-vista="revisar" class="vista"><div id="tarjeta"></div></section>
+          <section data-vista="tabla" class="vista" hidden>
+            <div class="tabla-envoltura"><table id="tabla"></table></div>
+            <div class="paginacion" id="paginacion"></div>
+          </section>
+          <section data-vista="panorama" class="vista" hidden><div id="panorama"></div></section>
+          <section data-vista="archivos" class="vista" hidden><div id="vista-archivos"></div></section>
+          <section data-vista="modelo" class="vista" hidden><div id="modelo"></div></section>
+          <section data-vista="exportar" class="vista" hidden><div id="exportar"></div></section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <a href="https://sugarfree.com.mx/tarjeta/" target="_blank" rel="noopener noreferrer">Axel Reyes</a>
+  </footer>
+
+  <!-- Ajustes: hoja lateral -->
+  <div class="velo" id="velo" hidden></div>
+  <aside id="ajustes" class="hoja" hidden aria-label="Ajustes" tabindex="-1">
+    <div class="hoja-cabeza">
+      <h2>Ajustes</h2>
+      <button class="boton-icono" type="button" id="btn-cerrar-ajustes" aria-label="Cerrar"><svg><use href="#i-x"/></svg></button>
+    </div>
+    <p class="hoja-nota">Se aplican al volver a limpiar.</p>
+
+    <section class="grupo">
+      <h3>Qué tan estricto</h3>
+      <div class="zonas" id="zonas" aria-hidden="true"></div>
+      <label class="deslizador">Abajo de este puntaje se descarta <output data-para="umbral_bajo"></output>
+        <input type="range" name="umbral_bajo" min="0" max="1" step="0.05" value="0.35"></label>
+      <label class="deslizador">Arriba de este puntaje se conserva <output data-para="umbral_alto"></output>
+        <input type="range" name="umbral_alto" min="0" max="1" step="0.05" value="0.70"></label>
+      <label class="deslizador">Una nota completa tiene al menos <output data-para="min_palabras"></output>
+        <input type="range" name="min_palabras" min="10" max="300" step="10" value="60">
+        <small>Menos palabras que esto baja el puntaje.</small></label>
+    </section>
+
+    <section class="grupo">
+      <h3>Duplicados</h3>
+      <label class="deslizador">Iguales a partir de <output data-para="umbral_duplicado"></output>
+        <input type="range" name="umbral_duplicado" min="0.5" max="1" step="0.05" value="0.8">
+        <small>Se queda la mejor versión; las demás se descartan.</small></label>
+      <label class="deslizador">Parecidas a partir de <output data-para="umbral_gris"></output>
+        <input type="range" name="umbral_gris" min="0.3" max="1" step="0.05" value="0.5">
+        <small>Van a revisión para que decidas tú.</small></label>
+    </section>
+
+    <section class="grupo">
+      <h3>Modelo</h3>
+      <label class="interruptor"><span>Dejar que el modelo ayude</span>
+        <input type="checkbox" name="usar_modelo" checked role="switch"><i></i></label>
+      <label class="deslizador">Solo si está así de seguro <output data-para="umbral_modelo"></output>
+        <input type="range" name="umbral_modelo" min="0.5" max="0.99" step="0.01" value="0.85"></label>
+    </section>
+
+    <div class="hoja-pie">
+      <button id="btn-restablecer" class="boton contorno" type="button">Restablecer</button>
+      <button id="btn-aplicar" class="boton primario" type="button">Volver a limpiar</button>
+    </div>
+  </aside>
+
+  <div id="cargando" class="cargando" hidden><div class="giro"></div><p id="cargando-texto">Limpiando…</p></div>
+  <div id="avisos" class="avisos" aria-live="polite"></div>
+  <div id="tip" class="tip" role="tooltip" hidden></div>
+
+  <dialog id="ayuda">
+    <h2>Atajos de teclado</h2>
+    <dl class="atajos">
+      <dt><kbd>C</kbd></dt><dd>Conservar</dd>
+      <dt><kbd>D</kbd></dt><dd>Descartar</dd>
+      <dt><kbd>U</kbd></dt><dd>Dejar como dudosa</dd>
+      <dt><kbd>Z</kbd></dt><dd>Deshacer la última decisión</dd>
+      <dt><kbd>→</kbd> <kbd>J</kbd></dt><dd>Siguiente</dd>
+      <dt><kbd>←</kbd> <kbd>K</kbd></dt><dd>Anterior</dd>
+      <dt><kbd>1</kbd>–<kbd>9</kbd></dt><dd>Poner categoría</dd>
+      <dt><kbd>F</kbd></dt><dd>Mostrar u ocultar filtros</dd>
+      <dt><kbd>/</kbd></dt><dd>Buscar</dd>
+      <dt><kbd>?</kbd></dt><dd>Esta ayuda</dd>
+    </dl>
+    <form method="dialog"><button class="boton primario">Entendido</button></form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>

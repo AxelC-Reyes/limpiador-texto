@@ -1,0 +1,61 @@
+{
+ "status": "ok",
+ "data": [
+  {
+   "titulo": "Banxico mantiene la tasa de interés en 7.5%",
+   "texto": "De acuerdo con información oficial, la Junta de Gobierno del Banco de México decidió por unanimidad mantener la tasa de interés interbancaria en 7.5 por ciento, citando una inflación subyacente que todavía no converge a la meta. Analistas consultados esperaban el movimiento y anticipan recortes graduales en el primer trimestre. El peso reaccionó con una ligera apreciación frente al dólar tras el anuncio, mientras que los bonos de largo plazo registraron movimientos moderados. La institución señaló que vigilará de cerca la evolución de los precios de energéticos y alimentos en los próximos meses.",
+   "fecha": "27 de septiembre de 2026",
+   "medio": "Noticias del Sur",
+   "enlace": "https://noticiasdelsur.com/0"
+  },
+  {
+   "titulo": "Sismo de magnitud 5.8 sacude Oaxaca sin reportes de daños graves",
+   "texto": "De acuerdo con información oficial, un sismo de magnitud 5.8 se registró la mañana de este martes con epicentro a 30 kilómetros al sur de Pinotepa Nacional, informó el Servicio Sismológico Nacional. Protección Civil estatal realizó recorridos en las comunidades cercanas y reportó daños menores en bardas y fachadas. La alerta sísmica se activó en la Ciudad de México, donde se desalojaron edificios de manera preventiva. Los funcionarios pidieron a la población revisar sus viviendas y reportar grietas.",
+   "fecha": "martes 22 de sept. de 2026 a las 10:30",
+   "medio": "Noticias del Sur",
+   "enlace": "https://noticiasdelsur.com/1"
+  },
+  {
+   "titulo": "La UNAM muestra un satélite diseñado por estudiantes",
+   "texto": "De acuerdo con información oficial, estudiantes de la Facultad de Ingeniería de la UNAM presentaron un nanosatélite que medirá la humedad del suelo en zonas agrícolas del norte del país. La iniciativa tomó tres años y contó con apoyo de la Agencia Espacial Mexicana. El dispositivo será lanzado el próximo año desde una plataforma internacional y enviará datos a una estación terrena instalada en Ciudad Universitaria. Los responsables esperan que la información ayude a planear el riego y reducir el desperdicio de agua.",
+   "fecha": "hace 3 horas",
+   "medio": "Noticias del Sur",
+   "enlace": "https://noticiasdelsur.com/2"
+  },
+  {
+   "titulo": "InflaciÃ³n repunta en la primera quincena de septiembre",
+   "texto": "El Ã­ndice nacional de precios al consumidor subiÃ³ 0.4% en la primera quincena, impulsado por alimentos y energÃ©ticos, informÃ³ el INEGI.",
+   "fecha": "15/09/2026",
+   "medio": "Economía Hoy",
+   "enlace": "https://economiahoy.mx/inflacion"
+  },
+  {
+   "titulo": "Horóscopo de hoy: lo que dicen los astros para Escorpio",
+   "texto": "Hoy la luna te sonríe. Tu número de la suerte es el 7. Suscríbete para leer más.",
+   "fecha": "hoy",
+   "medio": "Revista Astral"
+  },
+  {
+   "titulo": "404",
+   "texto": "Page not found. La página que buscas no existe.",
+   "fecha": null
+  },
+  {
+   "titulo": "Última hora",
+   "texto": "",
+   "fecha": "ayer"
+  },
+  {
+   "titulo": "",
+   "texto": "",
+   "medio": "vacío total"
+  },
+  {
+   "titulo": "Gobierno anuncia programa de becas",
+   "texto": "El gobierno federal anunció un nuevo programa de becas para estudiantes de bachillerato. Los detalles se darán a conocer la próxima semana.",
+   "fecha": 1790000000000,
+   "medio": "Agencia MX",
+   "enlace": "https://agenciamx.com/becas"
+  }
+ ]
+}

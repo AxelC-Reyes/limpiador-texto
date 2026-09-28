@@ -1,0 +1,11 @@
+# entorno y cachés
+.venv/
+__pycache__/
+.pytest_cache/
+.DS_Store
+
+# lo que aprende el modelo en cada máquina (decisiones hechas a mano)
+datos_modelo/
+
+# datos de prueba grandes: se regeneran con `python generar_datos.py 50000`
+datos_prueba/masivo_*.jsonl
