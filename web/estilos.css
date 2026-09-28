@@ -600,7 +600,7 @@ dialog form { text-align: right; }
 .atajos dt { display: flex; gap: 4px; }
 .atajos dd { margin: 0; color: var(--texto-2); }
 
-.pie { text-align: center; padding: 48px 20px 30px; font-size: 13px; }
+.pie { width: 100%; max-width: 1240px; margin: 0 auto; padding: 48px 32px 30px; text-align: left; font-size: 13px; }
 .pie a { color: var(--pie); text-decoration: none; transition: color .25s; }
 .pie a:hover { color: var(--texto-3); }
 
@@ -617,6 +617,7 @@ dialog form { text-align: right; }
 }
 @media (max-width: 760px) {
   main { padding: 20px 16px 8px; }
+  .pie { padding: 40px 16px 24px; }
   .marca-texto { display: none; }
   .cifras { gap: 18px 32px; }
   .cifra-valor { font-size: 34px; }
